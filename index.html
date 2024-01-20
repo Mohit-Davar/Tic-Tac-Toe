@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu">
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>Tic-Tac-Toe</h1>
+        <div class="game-area">
+
+        </div>
+        <div class="bttn">
+            <button>
+                Reset
+            </button>
+        </div>
+    </div>
+</body>
+<script>
+    let game_area = document.querySelector('.game-area');
+    let isPlayer1 = true;
+    //Displaying Grid
+    for (let i = 1; i <= 9; ++i) {
+        let box = document.createElement('button');
+        box.classList.add('boxes');
+        box.id = `box-${i}`;
+        game_area.appendChild(box);
+    }
+    let boxes = document.querySelectorAll('.boxes')
+    //Disabling Boxes
+    const disableBoxes = () => {
+        for (let box of boxes) {
+            box.disabled = true;
+        }
+    }
+    const changestyle = (bttn) => {
+        bttn.style.backgroundColor = (bttn.style.backgroundColor === "teal") ? 'white' : 'teal';
+        bttn.style.color = (bttn.style.color === "white") ? '#56baec' : 'white';
+    }
+    //Printing x or o 
+    for (let box of boxes) {
+        box.addEventListener('click', (e) => {
+            if (isPlayer1) {
+                if (box.innerHTML === "") {
+                    box.innerHTML = '<i class="fa-solid fa-x"></i>';
+                    isPlayer1 = false;
+                }
+            }
+            else {
+                if (box.innerHTML === "") {
+                    box.innerHTML = '<i class="fa-regular fa-circle"></i>';
+                    isPlayer1 = true;
+                }
+            }
+            checkWInner();
+        })
+    }
+    // Win Conditions
+    let winPatterns = [
+        [0, 1, 2],
+        [0, 3, 6],
+        [0, 4, 8],
+        [1, 4, 7],
+        [2, 5, 8],
+        [2, 4, 6],
+        [3, 4, 5],
+        [6, 7, 8]
+    ];
+
+    //Checking Win Condition
+    const checkWInner = () => {
+        for (let pattern of winPatterns) {
+            value1 = boxes[pattern[0]].innerHTML;
+            value2 = boxes[pattern[1]].innerHTML;
+            value3 = boxes[pattern[2]].innerHTML;
+
+            if (value1 != "" && value2 != "" && value3 != "") {
+                if (value1 === value2 && value2 == value3) {
+                    setTimeout(() => {
+                        if (isPlayer1) {
+                            window.alert("Winner is O")
+                        }
+                        else {
+                            window.alert("Winner is X")
+                        }
+                    }, 250);
+                    disableBoxes();
+                    changestyle(boxes[pattern[0]])
+                    changestyle(boxes[pattern[1]])
+                    changestyle(boxes[pattern[2]])
+
+                }
+            }
+        }
+    }
+    //Reseting the Game
+    document.querySelector('.bttn button').addEventListener('click', () => {
+        for (let box of boxes) {
+            box.innerHTML = "";
+            isPlayer1 = true;
+
+            box.disabled = false;
+
+            //Resetting box styles
+            box.style.color = '#56baec';
+            box.style.backgroundColor = 'white'
+
+            //Restoring Hover effects
+            if(!box.disabled){
+                box.addEventListener('mouseover', () => {
+                    box.style.backgroundColor = 'teal';
+                    box.style.color = 'white';
+                });
+    
+                box.addEventListener('mouseout', () => {
+                    box.style.backgroundColor = 'white';
+                    box.style.color = '#56baec';
+                });
+            }
+        }
+    })
+</script>
+
+</html>
