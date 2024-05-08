@@ -54,10 +54,10 @@ inset -3px -3px 5px rgba(0, 0, 180, 0.5);
 
                 user-select: none;
                 box-shadow: $box-shadow;
-                &:hover{
-                    background: teal;
-                    color: white;
-                }
+                // &:hover{
+                //     background: teal;
+                //     color: white;
+                // }
             }
         }
 
@@ -67,17 +67,18 @@ inset -3px -3px 5px rgba(0, 0, 180, 0.5);
                 border: none;
                 outline: none;
 
-                padding: 2vw;
+                padding:20px 2vw;
                 background-color: white;
                 color: #56baec;
                 font-size: clamp(1.5rem,1vw,10rem);
+                min-width: 100px;
 
                 border-radius: 50px;
                 box-shadow: $box-shadow;
-                // &:hover{
-                //     background: teal;
-                //     color: white;
-                // }
+                &:hover{
+                    background: teal;
+                    color: white;
+                }
             }
         }
     }
